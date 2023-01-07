@@ -64,7 +64,7 @@ struct ContentView: View {
                         Hexagonal().fill(Color.white.opacity(0.8))
                             .frame(width: 120, height: 120,alignment: .center)
                             .overlay(
-                                Image(symbols[0])
+                                Image(symbols[numbers[0]])
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 80, height: 70,alignment: .center)
@@ -74,7 +74,7 @@ struct ContentView: View {
                         Hexagonal().fill(Color.white.opacity(0.8))
                             .frame(width: 120, height: 120,alignment: .center)
                             .overlay(
-                                Image(symbols[0])
+                                Image(symbols[numbers[1]])
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 80, height: 70,alignment: .center)
@@ -86,7 +86,7 @@ struct ContentView: View {
                     Hexagonal().fill(Color.white.opacity(0.8))
                         .frame(width: 120, height: 120,alignment: .center)
                         .overlay(
-                            Image(symbols[0])
+                            Image(symbols[numbers[2]])
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 70,alignment: .center)
@@ -97,7 +97,7 @@ struct ContentView: View {
                         Hexagonal().fill(Color.white.opacity(0.8))
                             .frame(width: 120, height: 120,alignment: .center)
                             .overlay(
-                                Image(symbols[0])
+                                Image(symbols[numbers[0]])
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 80, height: 70,alignment: .center)
@@ -107,7 +107,7 @@ struct ContentView: View {
                         Hexagonal().fill(Color.white.opacity(0.8))
                             .frame(width: 120, height: 120,alignment: .center)
                             .overlay(
-                                Image(symbols[0])
+                                Image(symbols[numbers[1]])
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 80, height: 70,alignment: .center)
@@ -116,6 +116,49 @@ struct ContentView: View {
                                 
                             )
                     }
+                }
+                
+                Button {
+                    self.numbers[0] = Int.random(in: 0...self.symbols.count - 1)
+                    
+                    self.numbers[1] = Int.random(in: 0...self.symbols.count - 1)
+                    
+                    self.numbers[2] = Int.random(in: 0...self.symbols.count - 1)
+                    
+                    counter += 1
+                    
+                    if self.numbers[0] == self.numbers[1] && self.numbers[1] == self.numbers[2] {
+                        self.showingAlert = .success
+                        counter = 0
+                    }
+                    
+                    if counter > 5 {
+                        self.showingAlert = .failure
+                        counter = 0
+                    }
+                    
+                } label: {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color("color"))
+                        .overlay(
+                        Text("Spin")
+                        .fontWeight(.black)
+                        .font(.title3)
+                        )
+                        .foregroundColor(.black)
+                        .frame(width: 200, height: 40,alignment: .center)
+                        .shadow(color: .gray, radius: 1,y: 4)
+                    
+                }
+
+            }
+            .alert(item: $showingAlert) { alert -> Alert in
+                switch alert {
+                case .success:
+                    return Alert(title: Text("Yeeahh ! You won"),message: Text("Born with the charm"), dismissButton: .cancel())
+                    
+                case .failure:
+                    return Alert(title: Text("Ahh Nooo ! You didnt won"),message: Text("Better luck next time"), dismissButton: .cancel())
                 }
             }
         }
